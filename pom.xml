@@ -67,7 +67,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                co.edu.uniquindio.gestorcontactos/co.edu.uniquindio.gestorcontactos.HelloApplication
+                                co.edu.uniquindio.gestorcontactos/co.edu.uniquindio.gestorcontactos.ContactosApp
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

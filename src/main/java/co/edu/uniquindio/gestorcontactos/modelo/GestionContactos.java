@@ -21,7 +21,11 @@ public class GestionContactos {
             throw new Exception("Todos los campos son obligatorios");
 
         if(fechaDeNacimiento.isAfter(LocalDate.now()))
-            throw new Exception("la fecha no puede ser despues de la fecha actual");
+            throw new Exception("la fecha de nacimiento no puede ser despues de la fecha actual");
+
+        if(contactoExiste(numeroDeTelefono))
+            throw new Exception("ya existe un contacto registrado con este numero");
+
 
         Contacto nuevoContacto = Contacto.builder()
                 .nombre(nombre)
@@ -33,6 +37,16 @@ public class GestionContactos {
 
         listaContactos.add(nuevoContacto);
     }
+
+    public boolean contactoExiste(String numero){
+        for(Contacto contacto : listaContactos){
+            if(contacto.getNumeroDeTelefono().equals(numero)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public List<Contacto> listarContactos(){
         return new ArrayList<>(listaContactos);
