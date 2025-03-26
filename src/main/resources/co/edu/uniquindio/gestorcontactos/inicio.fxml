@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane prefHeight="540.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.gestorcontactos.controladores.InicioControlador">
+<AnchorPane prefHeight="540.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.gestorcontactos.controladores.InicioControlador">
 
     <Label layoutX="27.0" layoutY="35.0" text="Nombre:" />
     <TextField fx:id="txtNombre" layoutX="100.0" layoutY="30.0" minWidth="270.0" />
@@ -27,10 +27,10 @@
     <TextField fx:id="txtCorreo" layoutX="100.0" layoutY="180.0" minWidth="270.0" />
 
     <Label layoutX="27.0" layoutY="235.0" text="Fecha de nacimiento:" />
-    <DatePicker fx:id="datePickerFechaNacimiento" layoutX="150.0" layoutY="230.0" minWidth="270.0" />
-
+    <DatePicker fx:id="txtFechaNacimiento" layoutX="150.0" layoutY="230.0" minWidth="270.0" />
 
     <Button fx:id="btnNuevoContacto" layoutX="150.0" layoutY="280.0" text="Crear nuevo contacto" />
+
     <TableView fx:id="tablaContactos" layoutX="408.0" layoutY="305.0" prefHeight="205.0" prefWidth="402.0">
         <columns>
             <TableColumn fx:id="colNombre" text="Nombre" />

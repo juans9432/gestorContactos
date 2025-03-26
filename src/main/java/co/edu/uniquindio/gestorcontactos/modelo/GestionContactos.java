@@ -6,12 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
 @Getter
 public class GestionContactos {
-    public List<Contacto> listaContactos;
+    public List<Contacto> listaContactos = new ArrayList<>();
 
 
     public void agregarContacto(String nombre, String apellido, String numeroDeTelefono, String correoElectronico, LocalDate fechaDeNacimiento){
@@ -27,7 +28,7 @@ public class GestionContactos {
     }
 
     public List<Contacto> listarContactos(){
-        return listaContactos;
+        return new ArrayList<>(listaContactos);
     }
 
 
