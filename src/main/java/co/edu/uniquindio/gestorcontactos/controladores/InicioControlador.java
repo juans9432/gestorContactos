@@ -105,15 +105,13 @@ public class InicioControlador implements Initializable {
 
     }
 
-    public void actualizarContactos() {
-        contactosObservable.setAll(gestionContactos.listarContactos());
-    }
-
-
     private void cargarContactos() {
         contactosObservable.setAll(gestionContactos.listarContactos());
         tablaContactos.setItems(contactosObservable);
     }
 
+    public void actualizarContactos() {
+        contactosObservable.setAll(gestionContactos.listarContactos());
+    }
 
 }

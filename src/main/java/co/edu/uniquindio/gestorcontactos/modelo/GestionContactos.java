@@ -15,7 +15,14 @@ public class GestionContactos {
     public List<Contacto> listaContactos = new ArrayList<>();
 
 
-    public void agregarContacto(String nombre, String apellido, String numeroDeTelefono, String correoElectronico, LocalDate fechaDeNacimiento){
+    public void agregarContacto(String nombre, String apellido, String numeroDeTelefono, String correoElectronico, LocalDate fechaDeNacimiento) throws Exception{
+
+        if(nombre.isEmpty() || apellido.isEmpty() || numeroDeTelefono.isEmpty() || correoElectronico.isEmpty())
+            throw new Exception("Todos los campos son obligatorios");
+
+        if(fechaDeNacimiento.isAfter(LocalDate.now()))
+            throw new Exception("la fecha no puede ser despues de la fecha actual");
+
         Contacto nuevoContacto = Contacto.builder()
                 .nombre(nombre)
                 .apellido(apellido)
