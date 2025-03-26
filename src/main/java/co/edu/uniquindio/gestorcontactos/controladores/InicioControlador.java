@@ -9,9 +9,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class InicioControlador implements Initializable {
@@ -30,6 +35,15 @@ public class InicioControlador implements Initializable {
 
     @FXML
     private DatePicker txtFechaNacimiento;
+
+    @FXML
+    private TextField txtBuscar;
+
+    @FXML
+    private Button btnSeleccionarFoto;
+
+    @FXML
+    private ImageView imgContacto;
 
     @FXML
     private TableView<Contacto> tablaContactos;
@@ -61,6 +75,7 @@ public class InicioControlador implements Initializable {
     }
 
     @Override
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
         colApellido.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellido()));
@@ -102,16 +117,109 @@ public class InicioControlador implements Initializable {
         alert.setContentText(mensaje);
         alert.show();
 
-
-    }
+        }
 
     private void cargarContactos() {
-        contactosObservable.setAll(gestionContactos.listarContactos());
-        tablaContactos.setItems(contactosObservable);
+        contactosObservable.clear();
+        contactosObservable.addAll(gestionContactos.listarContactos());
+        tablaContactos.refresh();
     }
+
+    //Puede llamarse después de agregar, eliminar o modificar contactos para reflejar cambios en la tabla
 
     public void actualizarContactos() {
         contactosObservable.setAll(gestionContactos.listarContactos());
+        tablaContactos.refresh();
+    }
+
+    //Modifica solo un contacto y luego actualiza la tabla
+
+    public void actualizarContacto() {
+        // Obtener el contacto seleccionado en la tabla
+        Contacto contactoSeleccionado = tablaContactos.getSelectionModel().getSelectedItem();
+
+        if (contactoSeleccionado != null) {
+            contactoSeleccionado.setNombre(txtNombre.getText());
+            contactoSeleccionado.setApellido(txtApellido.getText());
+            contactoSeleccionado.setNumeroDeTelefono(txtNumero.getText());
+            contactoSeleccionado.setCorreoElectronico(txtCorreo.getText());
+            contactoSeleccionado.setFechaDeNacimiento(txtFechaNacimiento.getValue());
+
+            gestionContactos.actualizarContacto(contactoSeleccionado);
+
+
+            actualizarContactos();
+            mostrarAlerta("contacto actualizado correctamente", Alert.AlertType.INFORMATION);
+        } else {
+            mostrarAlerta("seleccione un contacto para actualizar", Alert.AlertType.WARNING);
+        }
+    }
+
+    public void eliminarContacto() {
+        // Obtener el contacto seleccionado en la tabla
+        Contacto contactoSeleccionado = tablaContactos.getSelectionModel().getSelectedItem();
+
+        if (contactoSeleccionado != null) {
+
+            Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmacion.setTitle("confirmar eliminacion");
+            confirmacion.setHeaderText(null);
+            confirmacion.setContentText("¿esta seguro de que desea eliminar este contacto?");
+
+            Optional<ButtonType> resultado = confirmacion.showAndWait();
+
+            if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
+
+                gestionContactos.eliminarContacto(contactoSeleccionado);
+
+
+                actualizarContactos();
+                mostrarAlerta("contacto eliminado correctamente", Alert.AlertType.INFORMATION);
+            }
+        } else {
+            mostrarAlerta("seleccione un contacto para eliminar", Alert.AlertType.WARNING);
+        }
+    }
+
+    //metodo para buscar un contacto por su nombre
+    public void buscarContacto() {
+        String nombreBuscado = txtBuscar.getText();
+
+        if (nombreBuscado.isEmpty()) {
+            mostrarAlerta("ingrese un nombre para buscar.", Alert.AlertType.WARNING);
+            return;
+        }
+
+        Contacto contactoEncontrado = gestionContactos.buscarContactoPorNombre(nombreBuscado);
+
+        if (contactoEncontrado != null) {
+            String info = "Nombre: " + contactoEncontrado.getNombre() + "\n" +
+                    "Apellido: " + contactoEncontrado.getApellido() + "\n" +
+                    "Teléfono: " + contactoEncontrado.getNumeroDeTelefono() + "\n" +
+                    "Correo: " + contactoEncontrado.getCorreoElectronico() + "\n" +
+                    "Fecha de Nacimiento: " + (contactoEncontrado.getFechaDeNacimiento() != null ? contactoEncontrado.getFechaDeNacimiento().toString() : "No registrada");
+
+            mostrarAlerta(info, Alert.AlertType.INFORMATION);
+        } else {
+            mostrarAlerta("no se encontró ningún contacto con ese nombre.", Alert.AlertType.ERROR);
+        }
+    }
+
+    //seleccionar la foto del contacto
+    public void seleccionarFoto() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleccionar Imagen");
+
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg")
+        );
+
+        File file = fileChooser.showOpenDialog(null);
+
+        if (file != null) {
+            Image imagen = new Image(file.toURI().toString());
+            imgContacto.setImage(imagen); // muestra la imagen en el ImageView
+        }
     }
 
 }

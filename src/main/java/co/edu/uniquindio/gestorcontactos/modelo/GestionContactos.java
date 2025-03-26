@@ -39,4 +39,27 @@ public class GestionContactos {
     }
 
 
+    public void actualizarContacto(Contacto contactoActualizado) {
+        for (int i = 0; i < listaContactos.size(); i++) {
+            Contacto contacto = listaContactos.get(i);
+            if (contacto.getNumeroDeTelefono().equals(contactoActualizado.getNumeroDeTelefono())) {
+                // Reemplazar el contacto antiguo con el nuevo
+                listaContactos.set(i, contactoActualizado);
+                return;
+            }
+        }
+    }
+
+    public void eliminarContacto(Contacto contactoAEliminar) {
+        listaContactos.removeIf(contacto -> contacto.getNumeroDeTelefono().equals(contactoAEliminar.getNumeroDeTelefono()));
+    }
+
+    public Contacto buscarContactoPorNombre(String nombre) {
+        for (Contacto contacto : listaContactos) {
+            if (contacto.getNombre().equalsIgnoreCase(nombre)) {
+                return contacto;
+            }
+        }
+        return null;
+    }
 }
