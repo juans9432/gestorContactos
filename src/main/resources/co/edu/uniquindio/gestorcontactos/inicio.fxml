@@ -1,38 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import javafx.scene.image.ImageView?>
 <AnchorPane prefHeight="540.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.gestorcontactos.controladores.InicioControlador">
 
-    <Label layoutX="27.0" layoutY="35.0" text="Nombre:" />
-    <TextField fx:id="txtNombre" layoutX="100.0" layoutY="30.0" minWidth="270.0" />
+    <Label layoutX="29.0" layoutY="134.0" text="Nombre:" />
+    <TextField fx:id="txtNombre" layoutX="153.0" layoutY="129.0" minWidth="270.0" />
 
+    <Label layoutX="448.0" layoutY="73.0" text="Filtro:" />
+    <ComboBox fx:id="txtFiltro" layoutX="514.0" layoutY="69.0" minWidth="270.0" />
 
-    <Label layoutX="27.0" layoutY="85.0" text="Apellido:" />
-    <TextField fx:id="txtApellido" layoutX="100.0" layoutY="80.0" minWidth="270.0" />
+    <Label layoutX="29.0" layoutY="188.0" text="Apellido:" />
+    <TextField fx:id="txtApellido" layoutX="153.0" layoutY="183.0" minWidth="270.0" />
 
-    <Label layoutX="29.0" layoutY="229.0" text="Numero:" />
-    <TextField fx:id="txtNumero" layoutX="102.0" layoutY="224.0" minWidth="270.0" />
+    <Label layoutX="31.0" layoutY="239.0" text="Numero:" />
+    <TextField fx:id="txtNumero" layoutX="154.0" layoutY="235.0" minWidth="270.0" />
 
-    <Label layoutX="29.0" layoutY="279.0" text="Correo:" />
-    <TextField fx:id="txtCorreo" layoutX="102.0" layoutY="274.0" minWidth="270.0" />
+    <Label layoutX="31.0" layoutY="293.0" text="Correo:" />
+    <TextField fx:id="txtCorreo" layoutX="155.0" layoutY="288.0" minWidth="270.0" />
 
-    <Label layoutX="29.0" layoutY="329.0" text="Fecha de nacimiento:" />
-    <DatePicker fx:id="txtFechaNacimiento" layoutX="152.0" layoutY="324.0" minWidth="270.0" />
+    <Label layoutX="31.0" layoutY="344.0" text="Fecha de nacimiento:" />
+    <DatePicker fx:id="txtFechaNacimiento" layoutX="155.0" layoutY="340.0" minWidth="270.0" />
 
-    <Button fx:id="btnNuevoContacto" layoutX="76.0" layoutY="376.0" onAction="#crearContacto" text="Crear nuevo contacto" />
+    <Button fx:id="btnNuevoContacto" layoutX="475.0" layoutY="448.0" onAction="#crearContacto" text="Crear nuevo contacto" />
 
-    <Button fx:id="btnEditarContacto" layoutX="240.0" layoutY="376.0" text="Editar" />
+    <Button fx:id="btnEditarContacto" layoutX="639.0" layoutY="448.0" onAction="#actualizarContacto" text="Editar" />
 
-    <Button fx:id="btnEliminarContacto" layoutX="331.0" layoutY="376.0" text="Eliminar" />
+    <Button fx:id="btnEliminarContacto" layoutX="730.0" layoutY="448.0" onAction="#eliminarContacto" text="Eliminar" />
 
     <TableView fx:id="tablaContactos" layoutX="448.0" layoutY="124.0" prefHeight="277.0" prefWidth="401.0">
         <columns>
@@ -43,12 +45,8 @@
             <TableColumn fx:id="colFecha" text="Fecha de nacimiento" />
         </columns>
     </TableView>
-   <Label layoutX="27.0" layoutY="410.0" text="Foto" />
-   <ImageView id="imgContacto" fx:id="imgContacto" fitHeight="105.0" fitWidth="130.0" layoutX="324.0" layoutY="410.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-style: dashed;">
-      <image>
-         <Image url="@../../../../../../../../../Downloads/fotoUsuario.jpg" />
-      </image>
-   </ImageView>
-   <Button fx:id="btnSeleccionarFoto" layoutX="124.0" layoutY="410.0" mnemonicParsing="false" onAction="#seleccionarFoto" prefHeight="26.0" prefWidth="155.0" text="seleccionar foto" />
+   <Label layoutX="29.0" layoutY="413.0" text="Foto" />
+    <Button fx:id="btnSeleccionarFoto" layoutX="78.0" layoutY="386.0" onAction="#seleccionarFoto" text="Seleccionar Foto" />
+    <ImageView fx:id="imgContacto" layoutX="200.0" layoutY="386.0" fitHeight="100" fitWidth="100"/>
 
 </AnchorPane>
