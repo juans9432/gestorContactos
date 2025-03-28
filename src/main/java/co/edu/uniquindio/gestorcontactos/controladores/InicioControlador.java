@@ -256,6 +256,10 @@ public class InicioControlador implements Initializable {
         }
     }
 
+    /**
+     * metodo para seleccionar una imagen
+     * @param e
+     */
     public void seleccionarImagen(ActionEvent e) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar Imagen");
@@ -276,6 +280,7 @@ public class InicioControlador implements Initializable {
             }
         }
     }
+
     /**
      * metodo para limpiar los campos
      */

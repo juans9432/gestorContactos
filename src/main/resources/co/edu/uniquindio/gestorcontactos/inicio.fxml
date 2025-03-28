@@ -10,7 +10,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="540.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.gestorcontactos.controladores.InicioControlador">
+<AnchorPane prefHeight="540.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.gestorcontactos.controladores.InicioControlador">
 
     <Label layoutX="29.0" layoutY="134.0" text="Nombre:" />
     <TextField fx:id="txtNombre" layoutX="153.0" layoutY="129.0" minWidth="270.0" />
@@ -51,9 +51,9 @@
             <TableColumn fx:id="colFecha" prefWidth="${tablaContactos.width*0.2}" text="Fecha de nacimiento" />
         </columns>
     </TableView>
-   <Label layoutX="908.0" layoutY="68.0" text="Buscar:" />
-   <TextField fx:id="txtBuscar" layoutX="955.0" layoutY="64.0" prefHeight="25.0" prefWidth="200.0" />
-    <Button fx:id="btnBuscar" layoutX="1163.0" layoutY="64.0" onAction="#buscarContacto" prefHeight="25.0" prefWidth="30.0" />
+
+   <TextField fx:id="txtBuscar" layoutX="893.0" layoutY="64.0" prefHeight="25.0" prefWidth="200.0" />
+    <Button fx:id="btnBuscar" layoutX="1103.0" layoutY="64.0" onAction="#buscarContacto" prefHeight="20.0" prefWidth="80.0" text="Buscar" />
 
 
 
