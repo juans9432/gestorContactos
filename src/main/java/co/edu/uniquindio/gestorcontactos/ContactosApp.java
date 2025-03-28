@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
-public class ContactosApp extends Application {
+public class  ContactosApp extends Application {
 
 
     @Override

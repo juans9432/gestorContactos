@@ -7,46 +7,54 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<?import javafx.scene.image.ImageView?>
 <AnchorPane prefHeight="540.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.gestorcontactos.controladores.InicioControlador">
 
     <Label layoutX="29.0" layoutY="134.0" text="Nombre:" />
     <TextField fx:id="txtNombre" layoutX="153.0" layoutY="129.0" minWidth="270.0" />
 
-    <Label layoutX="448.0" layoutY="73.0" text="Filtro:" />
-    <ComboBox fx:id="txtFiltro" layoutX="514.0" layoutY="69.0" minWidth="270.0" />
+    <Label layoutX="532.0" layoutY="68.0" text="Filtro:" />
+    <ComboBox fx:id="txtFiltro" layoutX="575.0" layoutY="64.0" minWidth="270.0" />
 
     <Label layoutX="29.0" layoutY="188.0" text="Apellido:" />
     <TextField fx:id="txtApellido" layoutX="153.0" layoutY="183.0" minWidth="270.0" />
 
     <Label layoutX="31.0" layoutY="239.0" text="Numero:" />
-    <TextField fx:id="txtNumero" layoutX="154.0" layoutY="235.0" minWidth="270.0" />
+    <TextField fx:id="txtNumero" layoutX="153.0" layoutY="235.0" minWidth="270.0" />
 
     <Label layoutX="31.0" layoutY="293.0" text="Correo:" />
-    <TextField fx:id="txtCorreo" layoutX="155.0" layoutY="288.0" minWidth="270.0" />
+    <TextField fx:id="txtCorreo" layoutX="153.0" layoutY="288.0" minWidth="270.0" />
 
     <Label layoutX="31.0" layoutY="344.0" text="Fecha de nacimiento:" />
-    <DatePicker fx:id="txtFechaNacimiento" layoutX="155.0" layoutY="340.0" minWidth="270.0" />
+    <DatePicker fx:id="txtFechaNacimiento" layoutX="153.0" layoutY="340.0" minWidth="270.0" />
 
-    <Button fx:id="btnNuevoContacto" layoutX="475.0" layoutY="448.0" onAction="#crearContacto" text="Crear nuevo contacto" />
+    <Label layoutX="50.0" layoutY="418.0" text="Foto de Perfil:" />
+    <ImageView fx:id="imgPerfil" fitHeight="150" fitWidth="150" layoutX="213.0" layoutY="407.0" preserveRatio="true" />
 
-    <Button fx:id="btnEditarContacto" layoutX="639.0" layoutY="448.0" onAction="#actualizarContacto" text="Editar" />
+    <Button fx:id="btnSeleccionarFoto" layoutX="39.0" layoutY="444.0" onAction="#seleccionarImagen" text="Seleccionar Foto" />
 
-    <Button fx:id="btnEliminarContacto" layoutX="730.0" layoutY="448.0" onAction="#eliminarContacto" text="Eliminar" />
+    <Button fx:id="btnNuevoContacto" layoutX="717.0" layoutY="573.0" onAction="#crearContacto" prefHeight="32.0" prefWidth="115.0" style="-fx-background-color: #3370ff;" text="Agregar" textFill="#ffffff" />
 
-    <TableView fx:id="tablaContactos" layoutX="448.0" layoutY="124.0" prefHeight="277.0" prefWidth="401.0">
+    <Button fx:id="btnEditarContacto" layoutX="878.0" layoutY="573.0" onAction="#actualizarContacto" prefHeight="32.0" prefWidth="115.0" style="-fx-background-color: #FFFF00;" text="Actualizar" />
+
+    <Button fx:id="btnEliminarContacto" layoutX="1039.0" layoutY="573.0" onAction="#eliminarContacto" prefHeight="32.0" prefWidth="115.0" style="-fx-background-color: #f54a45;" text="Eliminar" textFill="#ffffff" />
+
+
+    <TableView fx:id="tablaContactos" layoutX="490.0" layoutY="129.0" prefHeight="404.0" prefWidth="819.0">
         <columns>
-            <TableColumn fx:id="colNombre" text="Nombre" />
-            <TableColumn fx:id="colApellido" text="Apellido" />
-            <TableColumn fx:id="colNumero" text="Numero" />
-            <TableColumn fx:id="colCorreo" text="Correo electronico" />
-            <TableColumn fx:id="colFecha" text="Fecha de nacimiento" />
+            <TableColumn fx:id="colNombre" prefWidth="${tablaContactos.width*0.2}" text="Nombre" />
+            <TableColumn fx:id="colApellido" prefWidth="${tablaContactos.width*0.2}" text="Apellido" />
+            <TableColumn fx:id="colNumero" prefWidth="${tablaContactos.width*0.2}" text="Numero" />
+            <TableColumn fx:id="colCorreo" prefWidth="${tablaContactos.width*0.2}" text="Correo electronico" />
+            <TableColumn fx:id="colFecha" prefWidth="${tablaContactos.width*0.2}" text="Fecha de nacimiento" />
         </columns>
     </TableView>
-   <Label layoutX="29.0" layoutY="413.0" text="Foto" />
-    <Button fx:id="btnSeleccionarFoto" layoutX="78.0" layoutY="386.0" onAction="#seleccionarFoto" text="Seleccionar Foto" />
-    <ImageView fx:id="imgContacto" layoutX="200.0" layoutY="386.0" fitHeight="100" fitWidth="100"/>
+   <Label layoutX="908.0" layoutY="68.0" text="Buscar:" />
+   <TextField fx:id="txtBuscar" layoutX="955.0" layoutY="64.0" prefHeight="25.0" prefWidth="200.0" />
+    <Button fx:id="btnBuscar" layoutX="1163.0" layoutY="64.0" onAction="#buscarContacto" prefHeight="25.0" prefWidth="30.0" />
+
+
 
 </AnchorPane>

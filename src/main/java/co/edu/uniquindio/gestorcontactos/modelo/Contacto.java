@@ -15,5 +15,6 @@ import java.time.LocalDate;
 public class Contacto {
     private String nombre, apellido, numeroDeTelefono, correoElectronico;
     private LocalDate fechaDeNacimiento;
-    private Image imgContacto;
+    private Image imagenContacto;
+
 }

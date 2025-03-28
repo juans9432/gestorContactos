@@ -11,7 +11,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
@@ -32,9 +34,6 @@ public class InicioControlador implements Initializable {
 
     @FXML
     private TextField txtCorreo;
-
-    @FXML
-    private TextField txtBuscar;
 
     @FXML
     private DatePicker txtFechaNacimiento;
@@ -61,7 +60,16 @@ public class InicioControlador implements Initializable {
     private TableColumn<Contacto, String> colFecha;
 
     @FXML
-    private ImageView imgContacto;
+    private TextField txtBuscar;
+
+    @FXML
+    private ComboBox<String> txtFiltro;
+
+    @FXML
+    private ImageView imgPerfil;
+
+    @FXML
+    private Button btnSeleccionarFoto;
 
     private Contacto contactoSeleccionado;
 
@@ -69,6 +77,9 @@ public class InicioControlador implements Initializable {
 
     private ObservableList<Contacto> contactosObservable;
 
+    /**
+     * constorlador de la clase
+     */
     public InicioControlador() {
         gestionContactos = new GestionContactos();
     }
@@ -83,6 +94,10 @@ public class InicioControlador implements Initializable {
             LocalDate fechaNacimiento = cellData.getValue().getFechaDeNacimiento();
             return new SimpleStringProperty(fechaNacimiento != null ? fechaNacimiento.toString() : "");
         });
+
+        txtFiltro.setItems( FXCollections.observableList(gestionContactos.listarFiltros()) );
+
+
         contactosObservable = FXCollections.observableArrayList();
         cargarContactos();
 
@@ -95,7 +110,7 @@ public class InicioControlador implements Initializable {
                 txtApellido.setText(contactoSeleccionado.getApellido());
                 txtNumero.setText(contactoSeleccionado.getNumeroDeTelefono());
                 txtCorreo.setText(contactoSeleccionado.getCorreoElectronico());
-                imgContacto.setImage(contactoSeleccionado.getImgContacto());
+
 
                 txtFechaNacimiento.setValue(contactoSeleccionado.getFechaDeNacimiento() != null
                         ? contactoSeleccionado.getFechaDeNacimiento()
@@ -106,6 +121,10 @@ public class InicioControlador implements Initializable {
     }
 
 
+    /**
+     * metodo para crear un contacto
+     * @param e
+     */
     public void crearContacto(ActionEvent e){
         try{
             LocalDate fechaNacimiento = txtFechaNacimiento.getValue();
@@ -125,6 +144,11 @@ public class InicioControlador implements Initializable {
         }
     }
 
+    /**
+     * metodopara mostrar una alerta
+     * @param mensaje
+     * @param tipo
+     */
     private void mostrarAlerta(String mensaje, Alert.AlertType tipo){
 
 
@@ -137,21 +161,30 @@ public class InicioControlador implements Initializable {
 
     }
 
+    /**
+     * metodo para acrgar contactos
+     */
     private void cargarContactos() {
         contactosObservable.setAll(gestionContactos.listarContactos());
         tablaContactos.setItems(contactosObservable);
     }
 
+    /**
+     * metodo para actualizar la lista de contactos
+     */
     public void actualizarContactos() {
         contactosObservable.setAll(gestionContactos.listarContactos());
     }
 
 
-    //Modifica solo un contacto y luego actualiza la tabla
-    public void actualizarContacto() {
-        //Obtener el contacto seleccionado en la tabla
+    /**
+     * metodo para actualizar un contacto en la tabla
+     * @param e
+     */
+    public void actualizarContacto(ActionEvent e) {
         Contacto contactoSeleccionado = tablaContactos.getSelectionModel().getSelectedItem();
-        if (contactoSeleccionado != null) {
+        try{
+        //Obtener el contacto seleccionado en la tabla
             contactoSeleccionado.setNombre(txtNombre.getText());
             contactoSeleccionado.setApellido(txtApellido.getText());
             contactoSeleccionado.setNumeroDeTelefono(txtNumero.getText());
@@ -160,12 +193,16 @@ public class InicioControlador implements Initializable {
             gestionContactos.actualizarContacto(contactoSeleccionado);
             actualizarContactos();
             mostrarAlerta("contacto actualizado correctamente", Alert.AlertType.INFORMATION);
-        } else {
-            mostrarAlerta("seleccione un contacto para actualizar", Alert.AlertType.WARNING);
-        }
+            limpiarCampos();
+        } catch (Exception ex){
+                mostrarAlerta(ex.getMessage(), Alert.AlertType.WARNING);
+            }
     }
 
-    public void eliminarContacto() {
+    /**
+     * metodo para eliminar un contacto de
+     */
+    public void eliminarContacto(ActionEvent e) {
         // Obtener el contacto seleccionado en la tabla
         Contacto contactoSeleccionado = tablaContactos.getSelectionModel().getSelectedItem();
 
@@ -188,20 +225,22 @@ public class InicioControlador implements Initializable {
             mostrarAlerta("seleccione un contacto para eliminar", Alert.AlertType.WARNING);
         }
     }
-    //
 
-    public void buscarContacto() {
-        String nombreBuscado = txtBuscar.getText();
-        String telefonoBuscado= txtBuscar.getText();
 
-        if (nombreBuscado.isEmpty()) {
+    /**
+     * metodo para buscar un contacto
+     * @param e
+     */
+    public void buscarContacto(ActionEvent e) {
+        String valor = txtBuscar.getText();
+        String criterio= txtFiltro.getValue();
+
+        if (valor.isEmpty()) {
             mostrarAlerta("ingrese un nombre para buscar.", Alert.AlertType.WARNING);
             return;
-        } else if (telefonoBuscado.isEmpty()) {
-            mostrarAlerta("ingrese un telefono para buscar", Alert.AlertType.WARNING);
         }
 
-        Contacto contactoEncontrado = gestionContactos.buscarContactoPorNombre(nombreBuscado);
+        Contacto contactoEncontrado = gestionContactos.leerContacto(valor, criterio);
 
         if (contactoEncontrado != null) {
             String info = "Nombre: " + contactoEncontrado.getNombre() + "\n" +
@@ -210,35 +249,43 @@ public class InicioControlador implements Initializable {
                     "Correo: " + contactoEncontrado.getCorreoElectronico() + "\n" +
                     "Fecha de Nacimiento: " + (contactoEncontrado.getFechaDeNacimiento() != null ? contactoEncontrado.getFechaDeNacimiento().toString() : "No registrada");
             mostrarAlerta(info, Alert.AlertType.INFORMATION);
+            txtBuscar.clear();
+            txtFiltro.setValue(null);
         } else {
             mostrarAlerta("no se encontró ningún contacto con ese nombre.", Alert.AlertType.ERROR);
         }
     }
-    //seleccionar la foto del contacto
 
-    public void seleccionarFoto() {
+    public void seleccionarImagen(ActionEvent e) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar Imagen");
-
         fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg")
+                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
         );
 
-        File file = fileChooser.showOpenDialog(null);
+        Stage stage = (Stage) imgPerfil.getScene().getWindow();
+        File file = fileChooser.showOpenDialog(stage);
 
         if (file != null) {
-            Image imagen = new Image(file.toURI().toString());
-            imgContacto.setImage(imagen); // muestra la imagen en el ImageView
+            Image imagen = new Image(file.toURI().toString());  // Cargar la imagen directamente
+            imgPerfil.setImage(imagen);  // Mostrar la imagen en el ImageView
+
+            // Guardar la imagen en el contacto seleccionado si hay uno
+            if (contactoSeleccionado != null) {
+                contactoSeleccionado.setImagenContacto(imagen);
+            }
         }
     }
-
-    private void limpiarCampos(){
+    /**
+     * metodo para limpiar los campos
+     */
+    private void limpiarCampos() {
         txtNombre.clear();
         txtApellido.clear();
         txtNumero.clear();
         txtCorreo.clear();
         txtFechaNacimiento.setValue(null);
-        imgContacto.setImage(null);
+        imgPerfil.setImage(null);
     }
 }
 
